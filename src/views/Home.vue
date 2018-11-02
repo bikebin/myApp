@@ -16,6 +16,13 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+  div {
+    width: 3.75rem;
+    height: 2rem;
+    background-color: deeppink;
+    h3 {
+      font-size: 0.14rem;
+    }
+  }
 </style>
