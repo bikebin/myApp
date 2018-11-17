@@ -34,6 +34,26 @@ const router =  new Router({
       component: () => import('@/views/Sort')
     },
     {
+      path: '/collection',
+      name: 'collection',
+      component: () => import('@/views/Collection')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('@/views/User')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/components/login/Login')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/components/register/Register')
+    },
+    {
       path: '*',
       redirect: '/home'
     }

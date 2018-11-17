@@ -1,10 +1,11 @@
 <template>
-
+  <div class="nine-to-nie">
+  </div>
 </template>
 
 <script>
     export default {
-        name: "NineToNie"
+        name: "NineToNie",
     }
 </script>
 

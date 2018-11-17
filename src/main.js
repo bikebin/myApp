@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import Mint from 'mint-ui'
 import store from  './store'
+import * as filters from './filters'
 
 Vue.prototype.axios = axios
 
@@ -16,6 +17,18 @@ import './utils/fontSize'
 //样式重置
 import './assets/css/reset.css'
 
+
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
+//表单验证插件
+import './utils/validate'
+
+
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 Vue.config.productionTip = false
 

@@ -1,12 +1,25 @@
 <template>
   <div id="app">
     <router-view/>
+    <foot></foot>
   </div>
 </template>
 
 <script>
+  import foot from './components/foot/Foot'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    foot
+  },
+  data() {
+    return {
+
+    }
+  },
+  watch: {
+
+  }
 }
 </script>
 

@@ -1,10 +1,13 @@
 <template>
-    <div>这个是分类模块</div>
+    <div>
+      这个是分类模块
+    </div>
 </template>
 
 <script>
+  import foot from '../components/foot/Foot'
     export default {
-        name: "Sort"
+        name: "Sort",
     }
 </script>
 
