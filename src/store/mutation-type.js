@@ -1,0 +1,1 @@
+export const GETOUT_CLASSNAME = 'GETOUT_CLASSNAME'

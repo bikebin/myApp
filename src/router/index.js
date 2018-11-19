@@ -41,7 +41,12 @@ const router =  new Router({
     {
       path: '/user',
       name: 'user',
-      component: () => import('@/views/User')
+      component: () => import('@/views/User'),
+    },
+    {
+      path: '/userSetting',
+      name: 'userSetting',
+      component: () => import('@/views/user/userSetting')
     },
     {
       path: '/login',
@@ -52,6 +57,11 @@ const router =  new Router({
       path: '/register',
       name: 'register',
       component: () => import('@/components/register/Register')
+    },
+    {
+      path: '/teaDetail/:id',
+      name: 'teaDetail',
+      component: () => import('@/components/teaDetail/teaDetail')
     },
     {
       path: '*',

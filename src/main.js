@@ -16,6 +16,8 @@ import 'mint-ui/lib/style.css'
 import './utils/fontSize'
 //样式重置
 import './assets/css/reset.css'
+//动画
+import './assets/css/animate.css'
 
 
 import VeeValidate from 'vee-validate';

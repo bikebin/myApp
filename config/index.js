@@ -18,6 +18,13 @@ module.exports = {
           '^/api': 'http://www.qvtao.com' //路径重写
         }
       }
+      // '/aps': {  //使用"/api"来代替"http://f.apiplus.c"
+      //   target: 'http://www.chawo.com', //源地址
+      //   changeOrigin: true, //改变源
+      //   pathRewrite: {
+      //     '^/aps': 'http://www.chawo.com' //路径重写
+      //   }
+      // }
     },
 
     // Various Dev Server settings

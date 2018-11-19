@@ -34,3 +34,25 @@ export function loginInfo(data) {
     data
   })
 }
+export function loginOut(query) {
+  return service({
+    url: `http://localhost:8080/api/index.php?r=login/destroy&token=${query}`,
+    method: 'GET',
+    params: {}
+  })
+}
+export function sortGoodsList() {
+  return service({
+    url: `http://localhost:8080/api/index.php?r=class/index&type=1`,
+    method: 'GET',
+    params: {}
+  })
+}
+
+export function sortTeaList() {
+  return service({
+    url: 'http://www.chawo.com/mobile/index.php?act=index',
+    method: 'GET',
+    params: {}
+  })
+}

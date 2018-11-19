@@ -1,7 +1,8 @@
 <template>
-    <div class="user">
+  <!--<transition enter-active-class="fadeIn" leave-active-class="fadeOut">-->
+    <div class="animated user">
       <div class="user-header">
-        <span class="setting">设置</span>
+        <span @click="gotoSetting" class="setting">设置</span>
         <img class="user-pic" src="http://cmsstatic.dataoke.com//wap_new/user/images/user_info_tx.png?v=201811131628" alt="">
         <p v-if="!userName" class="user-login"><a @click="goLogin" href="javascript:;">登录/注册</a></p>
         <div v-else class="user-success-login">
@@ -32,13 +33,18 @@
           <p><span>领券帮助</span><span class="user-san f-r">></span></p>
         </div>
       </div>
-
+      <!--<transition enter-active-class="slideInRight" leave-active-class="slideOutRight">-->
+        <!--&lt;!&ndash;<uesrSetting v-if="flagSetting"></uesrSetting>&ndash;&gt;-->
+          <!--<router-view  class="animated"></router-view>-->
+      <!--</transition>-->
     </div>
+  <!--</transition>-->
 </template>
 
 <script>
   import {loginInfo} from '../api/axios'
   import {getToken} from "../utils/cookies";
+  // import uesrSetting from  './user/userSetting'
 
   export default {
         name: "User",
@@ -46,11 +52,29 @@
           return {
             userName: '',
             userPrice: '',
+            flagSetting: false
           }
+      },
+      beforeRouteEnter (to, from, next) {
+       //this//获取不到当前组件
+        next(function(vm){
+          //该回调函数会在组件解析完成后回调6
+       });
+      },
+      beforeRouteLeave(to,from,next){//离开组件的时候触发
+        //什么都不写的时候，不会离开(走下一步)
+        next()
+      },
+      components: {
+        // uesrSetting
+      },
+      watch: {
+        '$route'() {
+
+        }
       },
       created() {
         this.userInfo()
-        console.log('user下的token',getToken('token'))
       },
       mounted() {
 
@@ -61,16 +85,21 @@
         },
         userInfo() {
           loginInfo(`token=${getToken('token')}&time=${new Date().getTime()}`).then((res) => {
-            console.log(res)
             this.userPrice = res.data.data.money
             this.userName = res.data.data.phone
           })
+        },
+        gotoSetting() {
+          this.$router.push({name:'userSetting'})
         }
       }
     }
 </script>
 
 <style scoped lang="less">
+  .animated {
+    animation-duration: 0.5s;
+  }
   .line {
     width: 3.75rem;
     height: 0.06rem;

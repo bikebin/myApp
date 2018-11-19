@@ -1,5 +1,6 @@
 <template>
-    <div class="login">
+  <!--<transition enter-active-class="fadeIn" leave-active-class="fadeOut">-->
+    <div class="animated login">
       <mt-header class="login-header" title="登录">
         <router-link to="/user" slot="left">
           <mt-button icon="back"></mt-button>
@@ -36,6 +37,7 @@
       <P class="register">还没有账号?立即<span @click="register" class="to-register">注册</span></P>
       <div class="mask"></div>
     </div>
+  <!--</transition>-->
 </template>
 
 <script>
@@ -138,7 +140,7 @@
             Toast({
               message:`${res.data.msg}`,
               duration: 1000,
-              className: 'Toast'
+              // className: 'Toast'
             });
             if(res.data.status === 1) {
               console.log('登录',res.data.data.token)
@@ -157,7 +159,9 @@
 </script>
 
 <style scoped lang="less">
-
+  .animated {
+    animation-duration: 0.5s;
+  }
   .login {
     .mint-header {
       background: linear-gradient(to left,#FA4DBE 0,#FBAA58 100%) !important;

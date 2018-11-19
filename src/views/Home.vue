@@ -1,5 +1,6 @@
 <template>
-    <div class="home">
+  <!--<transition enter-active-class="fadeIn" leave-active-class="fadeOut">-->
+    <div class="animated home">
       <div class="home-header">
         <input class="home-search" type="text">
         <span class="search-icon">搜索</span>
@@ -145,6 +146,7 @@
         <goodsList :list="goodsList" ></goodsList>
       </div>
     </div>
+  <!--</transition>-->
 </template>
 
 <script>
@@ -200,6 +202,9 @@
 </script>
 
 <style scoped lang="less">
+  .animated {
+    animation-duration: 0.5s;
+  }
   .price {
     margin-top: 0.02rem;
     font-size: 0.12rem;

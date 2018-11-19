@@ -49,13 +49,13 @@
         }
       },
       mounted() {
-        let as = document.getElementsByClassName("link")
-        // let ass = [...as]
+        let a = document.getElementsByClassName("link")
+        let as = [...a]
         let _this = this
         for(let i=0;i<as.length;i++){
           as[i].onclick = function(){
             _this.nowIndex = i
-            console.log(_this.nowIndex)
+            // console.log(_this.nowIndex)
           }
         }
       }
@@ -74,7 +74,7 @@
     z-index: 1000;
     position: fixed;
     bottom: 0;
-    /*background-color: #FA4DBE;*/
+    background-color: #ffffff;
     .foot-nav {
       width: 3.75rem;
       height: 0.4rem;
