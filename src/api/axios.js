@@ -56,3 +56,10 @@ export function sortTeaList() {
     params: {}
   })
 }
+export function goodsDetail(goods_id) {
+  return service({
+    url: `http://www.chawo.com/mobile/index.php?act=goods&op=goods_detail&goods_id=${goods_id}&key=bf65e52becc7ddd8349a0d4ac7256b70&dis_id=`,
+    method: 'GET',
+    params: {}
+  })
+}

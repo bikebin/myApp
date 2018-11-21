@@ -45,7 +45,7 @@
       methods: {
         teaList() {
           sortTeaList().then((res) => {
-            console.log('茶',res.data.datas)
+            // console.log('茶',res.data.datas)
             this.puleisheng = res.data.datas[1]
             this.puleishu = res.data.datas[2]
             this.hong = res.data.datas[3]
@@ -53,7 +53,7 @@
             this.lvcao = res.data.datas[5]
             this.wulong = res.data.datas[6]
             this.chaju = res.data.datas[7]
-            console.log('普雷熟茶',this.puleishu)
+            // console.log('普雷熟茶',this.puleishu)
           }).catch((err) => {
             console.log(err)
           })

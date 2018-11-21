@@ -27,7 +27,7 @@
             <img :class="{active:nowIndex==3}"  src="https://img.alicdn.com/imgextra/i1/2053469401/TB26bEfnQZmBKNjSZPiXXXFNVXa-2053469401.png" alt="">
             <img  src="https://img.alicdn.com/imgextra/i2/2053469401/TB2b3cKnL6TBKNjSZJiXXbKVFXa-2053469401.png" alt="">
           </div>
-          收藏
+          购物车
         </router-link>
         <router-link  class="link" :to="{name:'user'}">
           <div class="foot-item">
