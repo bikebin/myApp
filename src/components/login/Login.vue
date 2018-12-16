@@ -67,7 +67,6 @@
       watch: {
         success: {
           handler(newValue, ){
-            console.log(newValue)
             if(newValue.successPhone&&newValue.successPassword) {
               this.clickCan = false
             }
