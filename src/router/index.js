@@ -66,7 +66,13 @@ const router =  new Router({
     {
       path: '*',
       redirect: '/home'
-    }
+    },
+    //user下
+    {
+      path: '/user/file',
+      name: 'file',
+      component: () => import('@/views/User/file'),
+    },
   ]
 })
 
