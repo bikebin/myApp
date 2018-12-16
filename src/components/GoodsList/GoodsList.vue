@@ -1,6 +1,10 @@
 <template>
-    <div class="goods-list">
-      <div class="goods" v-for="(item,index) in list" :key="index">
+    <div class="goods-list"
+         v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="10">
+      <!--<mt-loadmore :auto-fill="ifAutoFill" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
+        <div class="goods" v-for="(item,index) in list" :key="index">
         <img v-lazy="item.pic" alt="">
         <div class="goods-list-info">
           <p class="goods-detail">{{item.d_title}}</p>
@@ -8,10 +12,12 @@
           <p class="goods-ticket"><span class="f-l pirce-col">券后价￥<span class="price-num">{{item.jiage}}</span></span><i class="f-r ticket">{{item.quan_jine}}元券</i></p>
         </div>
       </div>
+      <!--</mt-loadmore>-->
     </div>
 </template>
 
 <script>
+  import { InfiniteScroll } from 'mint-ui';
     export default {
         name: "GoodsList",
       props: {
@@ -19,7 +25,10 @@
       },
       data() {
           return {
-
+            allLoaded: false,//是否禁止触发上拉函数（拉上更新）
+            ifAutoFill: false,//是否自动触发上啦函数（拉上更新）
+            allList: [],
+            loading: false
           }
       },
       filters: {
@@ -30,6 +39,29 @@
       },
       created() {
 
+      },
+      methods: {
+        //上拉更新代码函数
+        // loadBottom() {
+        //   console.log("触发函数了哟~~")
+        //
+        //   // this.$store.state.num++
+        //   // Bus.$emit('NUM',this.$store.state.num)
+        //   setTimeout(()=>{
+        //     this.$refs.loadmore.onBottomLoaded()
+        //   },1000)
+        // }
+        loadMore() {
+          this.loading = true;
+          console.log('触发了')
+          setTimeout(() => {
+            let last = this.list[this.list.length - 1];
+            for (let i = 1; i <= 10; i++) {
+              this.list.push(last + i);
+            }
+            this.loading = false;
+          }, 2500);
+        }
       }
     }
 </script>
@@ -37,11 +69,10 @@
 <style scoped lang="less">
   .goods-list {
     width: 3.55rem;
-    height: 1.45rem;
     padding: 0 0.1rem;
     /*background-color: orange;*/
    .goods {
-     height: 100%;
+     height: 1.45rem;
      img {
        float: left;
        width: 1.26rem;

@@ -154,6 +154,7 @@
   import 'swiper/dist/css/swiper.min.css';
   import goodsList from '../components/GoodsList/GoodsList'
   import {getNacList,getGoodsList} from '../api/axios'
+  import { InfiniteScroll } from 'mint-ui';
      export default {
         name: "Home",
        data() {
@@ -187,15 +188,18 @@
               console.log('商品导航菜单',res.data)
             })
           },
-         getGoods() {
+          getGoods() {
            getGoodsList(`r=index/ajaxnew&page=1`).then((res) => {
              this.goodsList = res.data.data.data
              // console.log('商品列表详情',this.goodsList)
            })
          },
-         changeType() {
+          changeType() {
             this.popupVisible = !this.popupVisible
-         }
+         },
+          addMore(val) {
+            console.log('哈哈',val)
+          }
        }
      }
 

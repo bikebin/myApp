@@ -4,11 +4,11 @@
       <div class="user-header">
         <span @click="gotoSetting" class="setting">设置</span>
         <img class="user-pic" src="http://cmsstatic.dataoke.com//wap_new/user/images/user_info_tx.png?v=201811131628" alt="">
-        <p v-if="!userName" class="user-login"><a @click="goLogin" href="javascript:;">登录/注册</a></p>
-        <div v-else class="user-success-login">
+        <div v-if="userName"  class="user-success-login">
           <p>{{userName | hideNumber}}</p>
-          <p>已为你节省{{userPrice}}元</p>
+          <p>{{userPrice}}</p>
         </div>
+        <p v-else v-cloak  class="user-login"><a @click="goLogin" href="javascript:;">{{loginAndRegister}}</a></p>
       </div>
       <div class="user-content">
         <div class="user-type">
@@ -52,7 +52,8 @@
           return {
             userName: '',
             userPrice: '',
-            flagSetting: false
+            flagSetting: false,
+            loginAndRegister: ''
           }
       },
       beforeRouteEnter (to, from, next) {
@@ -84,9 +85,11 @@
           this.$router.push({name:'login'})
         },
         userInfo() {
-          loginInfo(`token=${getToken('token')}&time=${new Date().getTime()}`).then((res) => {
-            this.userPrice = res.data.data.money
-            this.userName = res.data.data.phone
+          loginInfo(`key=${getToken('token')}`).then((res) => {
+            console.log(res)
+            this.loginAndRegister = '登录/注册'
+            this.userPrice = res.data.datas.member_info.level_name
+            this.userName = res.data.datas.member_info.user_name ||''
           })
         },
         gotoSetting() {
@@ -97,6 +100,9 @@
 </script>
 
 <style scoped lang="less">
+  [v-cloak] {
+    display: none;
+  }
   .animated {
     animation-duration: 0.5s;
   }

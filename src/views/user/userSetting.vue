@@ -38,6 +38,7 @@
             let token = getToken().token
             loginOut(`${token}`).then((res) => {
               if(res.data.status === 1) {
+              console.log(res)
                 this.$router.push({name:'user'})
               }
             }).catch((error) => {

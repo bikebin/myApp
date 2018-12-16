@@ -20,10 +20,6 @@ import './assets/css/reset.css'
 import './assets/css/animate.css'
 
 
-import VeeValidate from 'vee-validate';
-Vue.use(VeeValidate);
-//表单验证插件
-import './utils/validate'
 
 
 

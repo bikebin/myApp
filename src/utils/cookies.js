@@ -11,8 +11,8 @@ export function getToken(saveName) {
 // Cookies.set('name', 'value', { expires: 7 });
 //为当前页创建有效期7天的cookie
 // Cookies.set('name', 'value', { expires: 7, path: '' });
-export function setToken(saveName,token) {
-  return Cookies.set(saveName,token)
+export function setToken(saveName,val) {
+  return Cookies.set(saveName,val)
 }
 
 //删除cookies
@@ -31,11 +31,11 @@ export function removeToken(saveName) {
 //如果你通过set方法，传入Array或类似对象，而不是简单的string，
 // 那么js-cookie会将你传入的数据用JSON.stringify转换为string保存。
 
-Cookies.set('name', { foo: 'bar' });
-Cookies.get('name'); // => '{"foo":"bar"}'
-Cookies.get(); // => { name: '{"foo":"bar"}' }
-
-//如果你用getJSON方法获取cookie，那么js-cookie会用JSON.parse解析string并返回。
-
-Cookies.getJSON('name'); // => { foo: 'bar' }
-Cookies.getJSON(); // => { name: { foo: 'bar' } }
+// Cookies.set('name', { foo: 'bar' });
+// Cookies.get('name'); // => '{"foo":"bar"}'
+// Cookies.get(); // => { name: '{"foo":"bar"}' }
+//
+// //如果你用getJSON方法获取cookie，那么js-cookie会用JSON.parse解析string并返回。
+//
+// Cookies.getJSON('name'); // => { foo: 'bar' }
+// Cookies.getJSON(); // => { name: { foo: 'bar' } }

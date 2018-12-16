@@ -1,19 +1,19 @@
 <template>
     <div class="cart">
-      <div class="cart-item">
-        <input class="cart-check f-l" type="checkbox">
+      <div class="cart-item" v-for="(item,index) in cartlist" :key="index">
+        <input class="cart-check f-l" type="checkbox" @click="change(index)" :checked="item.checked">
         <div class="cart-pic f-l">
-          <img src="//www.chawo.com/data/upload/shop/store/goods/2/2017/12/2_05671890230647455_240.jpg" alt="">
+          <img :src="item.pic" alt="">
         </div>
         <div class="cart-buy-detail f-l">
-          <p>2017年中茶7581单片装熟茶 250克/砖<span>垃圾桶</span></p>
+          <p>{{item.name}}<span @click="remove(index)">垃圾桶</span></p>
           <div>
-            <p class="cart-price">￥98</p>
+            <p class="cart-price">￥{{item.price}}</p>
             <div class="goods-num">
               <div class="f-r">
-                <span>-</span>
-                <input type="text" value="1">
-                <span>+</span>
+                <span @click="reduce(item)">-</span>
+                <input type="text" value="1" v-model="item.num">
+                <span @click="add(item)">+</span>
               </div>
             </div>
           </div>
@@ -23,8 +23,39 @@
 </template>
 
 <script>
+
     export default {
-        name: "Cart"
+        name: "Cart",
+      props:['cartlist'],
+      data() {
+          return {
+
+          }
+      },
+      methods: {
+        add(val) {
+          this.$set(val,'type',1)
+          this.$store.commit('GOODS_ADD',val)
+          console.log('购物内容',this.$store.state.added)
+        },
+        reduce(val) {
+          this.$store.commit('GOODS_REDUCE',val)
+          console.log('购物内容',this.$store.state.added)
+        },
+        change(n) {
+          console.log(n)
+          this.$store.commit('GOODS_CHOSE',n)
+        },
+        remove(n) {
+          this.$store.commit('GOODS_REMOVE',n)
+        }
+      },
+      computed:{
+        // ...Vuex.mapState(['count','price']),
+        // ...mapGetters(['total'])
+        //添加当前组件自身的计算属性
+        //....
+      }
     }
 </script>
 
@@ -90,6 +121,5 @@
         }
       }
     }
-
   }
 </style>

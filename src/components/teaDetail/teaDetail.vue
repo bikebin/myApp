@@ -36,28 +36,54 @@
             <span>好评率100%</span>
             <span class="f-r">({{goodsRating.length}}人评价) <span class=""> > </span></span>
           </p>
-          <div v-for="(item,index) in goodsRating" class="hot-rate">
+          <div v-for="(item,index) in goodsRating" :key="index" class="hot-rate">
             <span>★★★★</span>
             <p>{{item.geval_content}}</p>
           </div>
         </div>
       </div>
-      <a href="http://www.chawo.com/mobile/index.php?act=goods&op=goods_body&goods_id=106068"></a>
       <div class="foot-detail">
         <ul>
           <li>首页</li>
           <li>收藏</li>
           <li>客服</li>
-          <li>购物车</li>
-          <li>立即购买</li>
-          <li>加入购物车</li>
+          <li @click="goCart">购物车</li>
+          <li @click="popbuy">立即购买</li>
+          <li @click="popbuy">加入购物车</li>
         </ul>
       </div>
+      <!--弹框-->
+      <mt-popup v-model="popupVisible" position="bottom">
+        <div class="pop-buyInfo">
+          <div class="goods-info">
+            <img src="//www.chawo.com/data/upload/shop/store/goods/2/2018/07/2_05861796928311315_360.jpg" alt="">
+            <div class="goods-detail">
+              <p>2017年大益经典发放批生茶150克/饼</p>
+              <p><span class="goods-price">￥42.00</span><span class="f-r">库存：27</span></p>
+            </div>
+          </div>
+          <div class="pop-buy-count">
+            <p>购买数量</p>
+            <div class="goods-num f-r">
+              <div class="f-r">
+                <span @click="reduce">-</span>
+                <input type="text" value="" v-model="val">
+                <span @click="add">+</span>
+              </div>
+            </div>
+          </div>
+          <div class="pop-foot">
+            <span @click="joinCart">立即购买</span>
+            <span @click="joinCart">加入购物车</span>
+          </div>
+        </div>
+      </mt-popup>
     </div>
 </template>
 
 <script>
   import {goodsDetail} from '../../api/axios'
+  import { Indicator } from 'mint-ui';
     export default {
         name: "teaDetail",
       data() {
@@ -67,12 +93,18 @@
             imgList: [],
             goodsAllDetail: [],
             goodsRating: [],
-            flag: true
+            flag: true,
+            popupVisible: false,
+            val: 1,
+            // goodsList:[]
           }
       },
       created() {
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
         this.getGoodsDetail()
-        console.log(this.$route.params.id)
       },
       mounted() {
         console.log('滚动高度',this.$refs.scroll.scrollTop)
@@ -90,7 +122,8 @@
         },
         getGoodsDetail() {
           goodsDetail(this.$route.params.id).then((res) => {
-            console.log('商品详细信息',res.data.datas)
+            Indicator.close();
+            // console.log('商品详细信息',res.data.datas)
             this.goodsAllDetail = res.data.datas.goods_info
             this.goodsRating = res.data.datas.goods_eval_list
             this.imgList = res.data.datas.goods_image.split(',')
@@ -98,15 +131,42 @@
             console.log(err)
           })
         },
-        getScrollTop(){
-          let scrollTop=0;
-          if(document.documentElement&&document.documentElement.scrollTop){
-            scrollTop=document.documentElement.scrollTop;
-          }else if(document.body){
-            scrollTop=document.body.scrollTop;
+        popbuy() {
+          this.popupVisible = true
+        },
+        goCart() {
+          this.$router.push({name:'collection',params:{id:1}})
+        },
+        add() {
+          this.val++
+        },
+        reduce() {
+          if(this.val < 2) {
+            this.val = 1
+          }else {
+            this.val--
           }
-          return scrollTop;
+        },
+        joinCart() {
+          this.popupVisible = false
+          let val = {
+            id:this.$route.params.id,
+            num:this.val,
+            price:this.goodsAllDetail.goods_price,
+            name:this.goodsAllDetail.goods_name,
+            pic:this.imgList[0],
+            checked:true
+          }
+          this.$set(val,'type',0)
+          this.$store.commit('GOODS_ADD',val)
+          console.log('购物内容',this.$store.state.added)
         }
+      },
+      computed: {
+        // goods() {
+        //   return this.$store.state.added
+        //
+        // }
       }
     }
 </script>
@@ -158,6 +218,7 @@
           text-align: center;
           a {
             padding: 0 0.1rem;
+            color: #ccc;
           }
           span {
               display: inline-block;
@@ -320,6 +381,111 @@
           font-weight: 700;
         }
         li:nth-of-type(6) {
+          background-color: orange;
+        }
+      }
+    }
+    .pop-buyInfo {
+      width: 3.75rem;
+      height: 3rem;
+      .goods-info {
+        width: 3.75rem;
+        height: 0.8rem;
+        border-bottom: 0.1rem solid #eee;
+        img {
+          width: 0.66rem;
+          height: 0.66rem;
+          -webkit-background-size: cover;
+          background-size: cover;
+        }
+        .goods-detail {
+          display: inline-block;
+          width: 3rem;
+          vertical-align: top;
+          padding-top: 0.1rem;
+          p:nth-of-type(1) {
+            font-size: 0.13rem;
+            margin-bottom: 0.1rem;
+          }
+          p:nth-of-type(2) {
+            padding-right: 0.06rem;
+          }
+          .goods-price {
+            color: red;
+            font-size: 0.16rem;
+          }
+        }
+
+      }
+      .pop-buy-count {
+        width: 3.55rem;
+        height: 0.4rem;
+        padding: 0 0.1rem;
+        line-height: 0.4rem;
+        font-size: 0.14rem;
+        p {
+          display: inline-block;
+        }
+        .goods-num {
+          width: 2rem;
+          display: inline-block;
+          height: 0.4rem;
+          margin: 0 auto;
+          padding: 0.12rem 0 0.06rem;
+          vertical-align: top;
+          p {
+            display: inline-block;
+            font-size: 0.14rem;
+            line-height: 0.34rem;
+          }
+          div {
+            width: 0.91rem;
+            height: 0.3rem;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 0.04rem;
+            span {
+              display: inline-block;
+              width: 0.17rem;
+              text-align: center;
+              line-height: 0.3rem;
+              height: 0.3rem;
+              padding: 0 0.04rem;
+              font-size: 0.18rem;
+              vertical-align: top;
+            }
+            input {
+              text-align: center;
+              vertical-align: top;
+              width: 0.3rem;
+              height: 0.3rem;
+              border-top: none;
+              border-bottom: none;
+              border-left: 1px solid #ccc;
+              border-right: 1px solid #ccc;
+            }
+          }
+        }
+      }
+      .pop-foot {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 2rem;
+        height: 0.44rem;
+        span {
+          display: inline-block;
+          width: 1rem;
+          height: 0.44rem;
+          background-color: red;
+          float: left;
+          text-align: center;
+          line-height: 0.44rem;
+          font-size: 0.16rem;
+          font-weight: bold;
+          color: white;
+        }
+        span:nth-of-type(2) {
           background-color: orange;
         }
       }

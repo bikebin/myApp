@@ -52,8 +52,6 @@
             phone: '',
             errorPhone: '',
             flagPhone: false,
-
-
             password: '',
             errorPassword: '',
             flagPassword: false,
@@ -110,7 +108,7 @@
             this.success.successPassword = false
           }else {
             this.flagPassword = false
-            const passwordRegex =  /^\w{8,16}$/
+            const passwordRegex =  /^\w{6,16}$/
             if(passwordRegex.test(val)) {
               this.flagPassword = true
               this.errorPassword = '输入正确'
@@ -122,7 +120,7 @@
               this.success.successPassword = false
               this.clickCan = true
               this.flagPassword = true
-              this.errorPassword = '请输入8-16位的密码'
+              this.errorPassword = '请输入6-16位的密码'
             }
           }
         },
@@ -137,14 +135,16 @@
           login(
             `phone=${this.phone}&password=${this.password}`
           ).then((res) => {
+            console.log('login',res)
             Toast({
-              message:`${res.data.msg}`,
+              message:`${res.data.datas.error}`,
               duration: 1000,
               // className: 'Toast'
             });
-            if(res.data.status === 1) {
-              console.log('登录',res.data.data.token)
-              setToken('token',res.data.data.token)
+            if(res.data.code === 200) {
+              console.log('登录',res.data)
+              setToken('token',res.data.datas.key)
+              setToken('name',res.data.datas.username)
               setTimeout(() => {
                 this.$router.push({name:'user'})
               },1000)

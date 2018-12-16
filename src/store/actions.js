@@ -1,1 +1,8 @@
-import * as types from './mutation-type'
+
+const actions = {
+  addToCart({commit},product) {
+
+  }
+}
+
+export default actions
