@@ -13,7 +13,7 @@
       <div class="user-content">
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_like.svg" alt="">
-          <p><span>我的收藏</span><span class="user-san f-r">></span></p>
+          <p><span @click="gofile">我的收藏</span><span class="user-san f-r">></span></p>
         </div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_history.svg" alt="">
@@ -94,6 +94,9 @@
         },
         gotoSetting() {
           this.$router.push({name:'userSetting'})
+        },
+        gofile() {
+          this.$router.push({name: "file"})
         }
       }
     }
