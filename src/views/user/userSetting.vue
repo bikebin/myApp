@@ -42,7 +42,7 @@
                 this.$router.push({name:'user'})
               }
             }).catch((error) => {
-
+                console.log(error)
             })
           }).catch(() => {
 

@@ -6,6 +6,7 @@
         </router-link>
       </mt-header>
       <div class="sort-content">
+        {{$t('user.collect')}}
         <div class="shopping-name">
           <input type="checkbox" :checked="checkedALL"  v-model="checkedALL">
           <span>茶窝网</span>

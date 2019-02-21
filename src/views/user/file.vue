@@ -23,7 +23,7 @@
       return {
         formData:new FormData(),
         imgs: {},
-        imgLen:0,s
+        imgLen:0,
       }
     },
     watch: {

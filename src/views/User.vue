@@ -13,7 +13,7 @@
       <div class="user-content">
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_like.svg" alt="">
-          <p><span @click="gofile">我的收藏</span><span class="user-san f-r">></span></p>
+          <p><span @click="gofile">{{$t('user.collect')}}</span><span class="user-san f-r">></span></p>
         </div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_history.svg" alt="">
@@ -32,6 +32,12 @@
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_help.svg" alt="">
           <p><span>领券帮助</span><span class="user-san f-r">></span></p>
         </div>
+         <div class="user-type">
+          <select @change="changeLang(lang)" name="" id="" v-model="lang">
+            <option value="ien">Englisth</option>
+            <option value="izh">中文</option>
+          </select>
+        </div>
       </div>
       <!--<transition enter-active-class="slideInRight" leave-active-class="slideOutRight">-->
         <!--&lt;!&ndash;<uesrSetting v-if="flagSetting"></uesrSetting>&ndash;&gt;-->
@@ -44,16 +50,107 @@
 <script>
   import {loginInfo} from '../api/axios'
   import {getToken} from "../utils/cookies";
+  import iView from 'iview'
   // import uesrSetting from  './user/userSetting'
 
   export default {
         name: "User",
       data() {
           return {
+            lang: '',
             userName: '',
             userPrice: '',
             flagSetting: false,
-            loginAndRegister: ''
+            loginAndRegister: '',
+            arr1:[1,2,3,4,5,6],
+            arr2:[1,2,3,4,5,6,7],
+            ass:[
+              {
+                name: 'bin',
+                say: ''
+              },
+              {
+                name: 'yu',
+                say:''
+              }
+            ],
+            ass1:[
+              {
+                name: 'bin',
+                say: '你好'
+              },
+              {
+                name:'yu',
+                say:'h',
+                age: 22
+              }
+            ],
+            shu:[
+              {
+                name: '张三',
+                age: 22
+              },
+               {
+                name: '李四',
+                age:30
+              }
+            ],
+            shu1: [
+              {
+                name: '张大爷',
+                age:22,
+              },
+              {
+                name: '李领',
+                age:30
+              }
+            ],
+            duiXiang: {
+              color: 'yellow',
+              sex: '男',
+              age: 20,
+            },
+            duiXiang1: {
+              color: 'yellow',
+              sex: '女',
+              age: 20,
+            },
+            callBack: [
+              {
+                name: '1',
+                num: 0
+              },
+              {
+                name: '2',
+                num: 0
+              },
+              {
+                name: '3',
+                num: 0
+              },
+              {
+                name: '4',
+                num: 0
+              },
+              {
+                name: '5',
+                num: 0
+              },
+            ],
+            callBack1: [
+              {
+                name: '3',
+                num: 1000
+              },
+              {
+                name: '2',
+                num: 2000
+              },
+              {
+                name: '4',
+                num: 550
+              }
+            ]
           }
       },
       beforeRouteEnter (to, from, next) {
@@ -72,15 +169,47 @@
       watch: {
         '$route'() {
 
+        },
+        lang(v) {
+
         }
       },
       created() {
+        let assi = Object.assign({},this.ass,this.ass1)
+        console.log('assi',assi)
+        if(this.$i18n.locale == 'izh') {
+          this.lang = 'izh'
+        }else {
+          this.lang = 'ien'
+        }
         this.userInfo()
       },
       mounted() {
 
       },
       methods:{
+        changeLang(v) {
+            const locale = this.$i18n.locale = v
+            iView.locale = locale
+        },
+        jiao(arr1,arr2) {
+            const result = arr1.filter(r=>arr2.includes(r))
+            return result
+        },
+        isSub(arr1,arr2) {
+            let bool = true
+            arr1.forEach(r => {
+                if(!arr2.includes(r)) {
+                    bool = false
+                    return
+                }
+            })
+            return bool
+        },
+        diff(arr1,arr2) {
+          const result = arr1.filter(r=>!arr2.includes(r))
+          return result
+        },
         goLogin() {
           this.$router.push({name:'login'})
         },

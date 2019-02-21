@@ -7,7 +7,25 @@ import axios from 'axios'
 import Mint from 'mint-ui'
 import store from  './store'
 import * as filters from './filters'
-
+import iView from 'iview';
+import VueI18n  from 'vue-i18n'
+import ien from 'iview/dist/locale/en-US'
+import izh from 'iview/dist/locale/zh-CN'
+import en from './locale/en-US'
+import zh from './locale/zh-CN'
+// import 'iview/dist/styles/iview.css';
+Vue.use(iView);
+Vue.use(VueI18n)
+// Vue.locale = () => {};
+const messages = {
+  ien: Object.assign(en,ien),
+  izh: Object.assign(zh,izh)
+}
+const i18n = new VueI18n({
+  locale: 'izh',
+  messages
+})
+Vue.use(iView,{i18n:(key,value)=>i18n.t(key,value)})
 Vue.prototype.axios = axios
 
 Vue.use(Mint);
@@ -33,6 +51,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   components: { App },
