@@ -3,7 +3,7 @@
     <div class="animated login">
       <mt-header class="login-header" title="登录">
         <router-link to="/user" slot="left">
-          <mt-button icon="back"></mt-button>
+          <mt-button  icon="back"></mt-button>
         </router-link>
       </mt-header>
       <div class="login-info">
@@ -50,6 +50,7 @@
       data() {
           return {
             phone: '',
+            flagPhone: false,
             errorPhone: '',
             password: '',
             errorPassword: '',
@@ -75,17 +76,16 @@
       },
       methods: {
         textPhone(val) {
-          let flagPhone =  false
             if(val === '') {
-              flagPhone = true
+              this.flagPhone = true
               this.clickCan = true
               this.errorPhone = '输入不能为空~~'
               this.success.successPhone = false
             }else {
-              flagPhone = false
+              this.flagPhone = false
               const phoneRegex = /^(13[0-9]|15[0-9]|18[0-9]|170|176|177)\d{8}$/
               if(phoneRegex.test(val)) {
-                flagPhone = true
+                this.flagPhone = true
                 this.errorPhone = '输入正确'
                 setTimeout(() => {
                   this.errorPhone = ''
@@ -94,7 +94,7 @@
               }else {
                 this.success.successPhone = false
                 this.clickCan = true
-                flagPhone = true
+                this.flagPhone = true
                 this.errorPhone = '请输入正确11位手机号码~~'
               }
             }
@@ -133,23 +133,22 @@
         submit() {
           login(
             `phone=${this.phone}&password=${this.password}`
-          ).then((res) => {
-            console.log('login',res)
-            // Toast({
-            //   message:`${res.data.datas.error}`,
-            //   duration: 1000,
-            //   // className: 'Toast'
-            // });
-            // if(res.data.status == 200) {
+          ).then((res) => {  
+            if(res.status == 200) {
+              Toast({
+              message:`登录成功`,
+              duration: 1000,
+              // className: 'Toast'
+            });
               console.log('登录',res.data)
               setToken('token',res.data.data.token)
               setToken('name',res.data.data.trace_id)
               setTimeout(() => {
                 this.$router.push({name:'user'})
               },1000)
-            // }
-          }).error(e=> {
-            console.log(e)
+            }
+          }).catch(err=> {
+            
           })
         },
         register() {
@@ -274,3 +273,6 @@
     }
   }
 </style>
+
+
+

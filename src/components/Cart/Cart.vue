@@ -6,7 +6,7 @@
           <img :src="item.pic" alt="">
         </div>
         <div class="cart-buy-detail f-l">
-          <p>{{item.name}}<span @click="remove(index)">垃圾桶</span></p>
+          <p>{{item.name}}<span class="f-r" @click="remove(index)">垃圾桶</span></p>
           <div>
             <p class="cart-price">￥{{item.price}}</p>
             <div class="goods-num">

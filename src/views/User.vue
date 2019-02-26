@@ -17,20 +17,20 @@
         </div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_history.svg" alt="">
-          <p><span>浏览记录</span><span class="user-san f-r">></span></p>
+          <p><span @click="goHistory">{{$t('user.history')}}</span><span class="user-san f-r">></span></p>
         </div>
         <div class="line"></div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_feedback.svg" alt="">
-          <p><span>意见反馈</span><span class="user-san f-r">></span></p>
+          <p><span>{{$t('user.Feedback')}}</span><span class="user-san f-r">></span></p>
         </div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_servicer.svg" alt="">
-          <p><span>联系客服</span><span class="user-san f-r">></span></p>
+          <p><span>{{$t('user.CustomerService')}}</span><span class="user-san f-r">></span></p>
         </div>
         <div class="user-type">
           <img src="http://cmsstatic.dataoke.com//wap_new/user/images/icon/wode_icon_help.svg" alt="">
-          <p><span>领券帮助</span><span class="user-san f-r">></span></p>
+          <p><span>{{$t('user.CollarHelp')}}</span><span class="user-san f-r">></span></p>
         </div>
          <div class="user-type">
           <select @change="changeLang(lang)" name="" id="" v-model="lang">
@@ -39,10 +39,8 @@
           </select>
         </div>
       </div>
-      <!--<transition enter-active-class="slideInRight" leave-active-class="slideOutRight">-->
-        <!--&lt;!&ndash;<uesrSetting v-if="flagSetting"></uesrSetting>&ndash;&gt;-->
-          <!--<router-view  class="animated"></router-view>-->
-      <!--</transition>-->
+      <History ref="history" ></History>
+      <userSetting ref="userSetting"></userSetting>
     </div>
   <!--</transition>-->
 </template>
@@ -51,106 +49,24 @@
   import {loginInfo} from '../api/axios'
   import {getToken} from "../utils/cookies";
   import iView from 'iview'
-  // import uesrSetting from  './user/userSetting'
+  import History from  './user/history'
+  import userSetting from  './user/userSetting'
 
   export default {
         name: "User",
+        components: {
+          History,
+          userSetting
+        },
       data() {
           return {
+            showHistory: false,
             lang: '',
             userName: '',
             userPrice: '',
             flagSetting: false,
             loginAndRegister: '',
-            arr1:[1,2,3,4,5,6],
-            arr2:[1,2,3,4,5,6,7],
-            ass:[
-              {
-                name: 'bin',
-                say: ''
-              },
-              {
-                name: 'yu',
-                say:''
-              }
-            ],
-            ass1:[
-              {
-                name: 'bin',
-                say: '你好'
-              },
-              {
-                name:'yu',
-                say:'h',
-                age: 22
-              }
-            ],
-            shu:[
-              {
-                name: '张三',
-                age: 22
-              },
-               {
-                name: '李四',
-                age:30
-              }
-            ],
-            shu1: [
-              {
-                name: '张大爷',
-                age:22,
-              },
-              {
-                name: '李领',
-                age:30
-              }
-            ],
-            duiXiang: {
-              color: 'yellow',
-              sex: '男',
-              age: 20,
-            },
-            duiXiang1: {
-              color: 'yellow',
-              sex: '女',
-              age: 20,
-            },
-            callBack: [
-              {
-                name: '1',
-                num: 0
-              },
-              {
-                name: '2',
-                num: 0
-              },
-              {
-                name: '3',
-                num: 0
-              },
-              {
-                name: '4',
-                num: 0
-              },
-              {
-                name: '5',
-                num: 0
-              },
-            ],
-            callBack1: [
-              {
-                name: '3',
-                num: 1000
-              },
-              {
-                name: '2',
-                num: 2000
-              },
-              {
-                name: '4',
-                num: 550
-              }
-            ]
+            
           }
       },
       beforeRouteEnter (to, from, next) {
@@ -162,9 +78,6 @@
       beforeRouteLeave(to,from,next){//离开组件的时候触发
         //什么都不写的时候，不会离开(走下一步)
         next()
-      },
-      components: {
-        // uesrSetting
       },
       watch: {
         '$route'() {
@@ -192,26 +105,11 @@
             const locale = this.$i18n.locale = v
             iView.locale = locale
         },
-        jiao(arr1,arr2) {
-            const result = arr1.filter(r=>arr2.includes(r))
-            return result
-        },
-        isSub(arr1,arr2) {
-            let bool = true
-            arr1.forEach(r => {
-                if(!arr2.includes(r)) {
-                    bool = false
-                    return
-                }
-            })
-            return bool
-        },
-        diff(arr1,arr2) {
-          const result = arr1.filter(r=>!arr2.includes(r))
-          return result
-        },
         goLogin() {
           this.$router.push({name:'login'})
+        },
+        goHistory() {
+          this.$refs.history.show() 
         },
         userInfo() {
           loginInfo(`key=${getToken('token')}`).then((res) => {
@@ -222,7 +120,7 @@
           })
         },
         gotoSetting() {
-          this.$router.push({name:'userSetting'})
+           this.$refs.userSetting.show() 
         },
         gofile() {
           this.$router.push({name: "file"})
@@ -318,4 +216,5 @@
       }
     }
   }
+
 </style>

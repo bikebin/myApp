@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {getToken} from "../utils/cookies";
 
 /**
  * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
@@ -44,11 +45,6 @@ const router =  new Router({
       component: () => import('@/views/User'),
     },
     {
-      path: '/userSetting',
-      name: 'userSetting',
-      component: () => import('@/views/user/userSetting')
-    },
-    {
       path: '/login',
       name: 'login',
       component: () => import('@/components/login/Login')
@@ -74,6 +70,22 @@ const router =  new Router({
       component: () => import('@/views/User/file'),
     },
   ]
+  
 })
+router.beforeEach((to,from,next)=>{
+  console.log('router before each',to);
+  if(to.path=="/collection"){
+      if(!getToken().token){
+          //已经登录过
+          next('/login');//直接跳转到首页
+      }else{
+          next();
+      }
+  }else{
+      next();
+  }
+  
+});
+
 
 export default router

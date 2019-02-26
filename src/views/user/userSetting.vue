@@ -1,9 +1,9 @@
 <template>
-  <transition enter-active-class="slideInRight" leave-active-class="slideOutRight">
-    <div class="animated user-setting">
+  <transition name="slide">
+    <div class="animated user-setting" v-if="showFlag">
       <mt-header class="login-header" title="登录">
         <router-link to="/user" slot="left">
-          <mt-button icon="back"></mt-button>
+          <mt-button @click="back" icon="back"></mt-button>
         </router-link>
       </mt-header>
       <div class="user-content">
@@ -29,10 +29,17 @@
         name: "userSetting",
       data() {
           return {
-            userName: ''
+            userName: '',
+            showFlag: false
           }
       },
       methods: {
+        show() {
+          this.showFlag = true
+        },
+        back() {
+          this.showFlag = false
+        },
         goOutLogin() {
           MessageBox.confirm('确定执行此操作?').then(() => {
             let token = getToken().token
@@ -53,7 +60,12 @@
 </script>
 
 <style scoped lang="less">
-  .animated {animation-duration: 0.5s;}
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0.3s
+  }
+  .slide-enter, .slide-leave-to {
+    transform: translate3d(100%,0,0)
+  }
   /*.toast {*/
     /*z-index: 20000 !important;*/
   /*}*/
