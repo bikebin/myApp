@@ -74,12 +74,14 @@ const router =  new Router({
 })
 router.beforeEach((to,from,next)=>{
   console.log('router before each',to);
+  let token = getToken('token')
+  // debugger
   if(to.path=="/collection"){
-      if(!getToken().token){
-          //已经登录过
-          next('/login');//直接跳转到首页
+      if(token){
+        next();
       }else{
-          next();
+        //已经登录过
+        next('/login');//直接跳转到首页
       }
   }else{
       next();

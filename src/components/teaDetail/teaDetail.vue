@@ -83,6 +83,7 @@
 
 <script>
   import {goodsDetail} from '../../api/axios'
+  import {getToken} from "../../utils/cookies";
   import { Indicator } from 'mint-ui';
     export default {
         name: "teaDetail",
@@ -148,6 +149,7 @@
           }
         },
         joinCart() {
+          let token = getToken('token')
           this.popupVisible = false
           let val = {
             id:this.$route.params.id,
@@ -157,9 +159,14 @@
             pic:this.imgList[0],
             checked:true
           }
-          this.$set(val,'type',0)
-          this.$store.commit('GOODS_ADD',val)
-          console.log('购物内容',this.$store.state.added)
+          if(token) {
+            this.$set(val,'type',0)
+            this.$store.commit('GOODS_ADD',val)
+          }else {
+            this.$router.push({name: 'login'})
+          }
+          
+          // console.log('购物内容',this.$store.state.added)
         }
       },
       computed: {

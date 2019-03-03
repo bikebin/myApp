@@ -6,7 +6,7 @@
         <img class="user-pic" src="http://cmsstatic.dataoke.com//wap_new/user/images/user_info_tx.png?v=201811131628" alt="">
         <div v-if="userName"  class="user-success-login">
           <p>{{userName | hideNumber}}</p>
-          <p>{{userPrice}}</p>
+          <p>欢迎━(*｀∀´*)ノ亻!</p>
         </div>
         <p v-else v-cloak  class="user-login"><a @click="goLogin" href="javascript:;">{{loginAndRegister}}</a></p>
       </div>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <History ref="history" ></History>
-      <userSetting ref="userSetting"></userSetting>
+      <userSetting ref="userSetting" @remove="remove"></userSetting>
     </div>
   <!--</transition>-->
 </template>
@@ -88,6 +88,8 @@
         }
       },
       created() {
+        // debu
+        this.userName = getToken('name')
         let assi = Object.assign({},this.ass,this.ass1)
         console.log('assi',assi)
         if(this.$i18n.locale == 'izh') {
@@ -101,6 +103,9 @@
 
       },
       methods:{
+        remove(v) {
+          this.userName = v
+        },
         changeLang(v) {
             const locale = this.$i18n.locale = v
             iView.locale = locale

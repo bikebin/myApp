@@ -23,7 +23,7 @@
 <script>
   import { MessageBox,Toast } from 'mint-ui';
   import {loginOut} from '../../api/axios'
-  import {getToken} from "../../utils/cookies";
+  import {getToken,removeToken} from "../../utils/cookies";
 
   export default {
         name: "userSetting",
@@ -42,11 +42,21 @@
         },
         goOutLogin() {
           MessageBox.confirm('确定执行此操作?').then(() => {
-            let token = getToken().token
+            let token = getToken('token')
             loginOut(`${token}`).then((res) => {
               if(res.data.status === 1) {
               console.log(res)
-                this.$router.push({name:'user'})
+              // debugger
+              Toast({
+                message:`注销成功`,
+                duration: 500,
+                // className: 'Toast'
+              });
+                removeToken('token')
+                removeToken('name')
+                // debugger
+                this.$emit('remove','')
+                this.back()
               }
             }).catch((error) => {
                 console.log(error)
